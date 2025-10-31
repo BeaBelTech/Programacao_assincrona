@@ -1,8 +1,24 @@
 {
+  "name": "progassinc-ideas-backend",
+  "version": "0.1.0",
+  "description": "Backend da Plataforma de Ideias (Node.js + Express + MongoDB/Mongoose)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "seed": "node src/seed/seed.js"
+  },
+  "author": "VicenteEBeatriz",
+  "license": "MIT",
   "dependencies": {
-    "csurf": "^1.11.0",
-    "dotenv": "^17.2.3",
-    "express-flash": "^0.0.2",
-    "express-session": "^1.18.2"
+    "bcrypt": "^5.1.1",
+    "connect-mongo": "^4.6.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mongoose": "^7.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
