@@ -16,4 +16,8 @@ router.post('/login', authController.login);
 
 router.get('/logout', authController.logout);
 
+router.get('/centro', (req, res) => {
+    res.render('centro');
+});
+
 module.exports = router;
