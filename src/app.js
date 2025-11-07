@@ -5,6 +5,7 @@ const MongoStore = require('connect-mongo');
 const connectDB = require('./config/db');
 const exphbs = require('express-handlebars');
 const authRoutes = require('./routes/login_routes');
+const ideiaRoutes = require('./routes/idea_routes');
 const path = require("path");
 
 const app = express();
@@ -25,6 +26,7 @@ app.use(session({
 }));
 
 app.use('/', authRoutes);
+app.use('/ideas', ideiaRoutes);
 
 app.get('/', (req, res) => res.redirect('/login'));
 
