@@ -5,6 +5,7 @@ const MongoStore = require('connect-mongo');
 const connectDB = require('./config/db');
 const exphbs = require('express-handlebars');
 const authRoutes = require('./routes/login_routes');
+const authMiddleware = require('./middlewares/isLoggedIn');
 const path = require("path");
 
 const app = express();
@@ -23,6 +24,8 @@ app.use(session({
   store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
   cookie: { maxAge: 1000 * 60 * 60 * 24 }
 }));
+
+app.use(authMiddleware);
 
 app.use('/', authRoutes);
 

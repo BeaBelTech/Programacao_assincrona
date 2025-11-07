@@ -64,6 +64,5 @@ exports.logout = (req, res) => {
       return res.status(500).json({ erro: 'Erro ao encerrar sessão.' });
     }
     res.clearCookie('connect.sid');
-    res.json({ mensagem: 'Logout realizado com sucesso.' });
   });
 };

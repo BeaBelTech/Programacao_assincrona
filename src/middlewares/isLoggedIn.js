@@ -1,6 +1,14 @@
 module.exports = (req, res, next) => {
-  if (!req.session.userId) {
-    return res.status(401).json({ erro: 'Acesso negado. Faça login primeiro.' });
+  const estaLogado = !!req.session.userId;
+  const rota = req.path;
+
+  if (estaLogado && (rota === '/login' || rota === '/register')) {
+    return res.redirect('/centro');
   }
-  next();
+
+  if (!estaLogado && rota !== '/login' && rota !== '/register') {
+    return res.redirect('/login');
+  }
+
+  return next();
 };
