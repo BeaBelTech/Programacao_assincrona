@@ -5,6 +5,7 @@ const MongoStore = require('connect-mongo');
 const connectDB = require('./config/db');
 const exphbs = require('express-handlebars');
 const authRoutes = require('./routes/login_routes');
+const votesRoutes = require('./routes/votes_routes');
 const authMiddleware = require('./middlewares/isLoggedIn');
 
 const ideiaRoutes = require('./routes/idea_routes');
@@ -31,6 +32,7 @@ app.use(authMiddleware);
 
 app.use('/', authRoutes);
 app.use('/ideas', ideiaRoutes);
+app.use('/votes', votesRoutes);
 
 app.get('/', (req, res) => res.redirect('/login'));
 

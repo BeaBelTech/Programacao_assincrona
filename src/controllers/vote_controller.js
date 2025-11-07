@@ -1,7 +1,7 @@
 const Vote = require('../models/Vote');
 const Idea = require('../models/Idea');
 
-exports.toggleVote = async (req, res) => {
+exports.addVote = async (req, res) => {
   try {
     const userId = req.session.userId;
     const { ideaId } = req.body;
@@ -12,19 +12,39 @@ exports.toggleVote = async (req, res) => {
     const ideia = await Idea.findById(ideaId);
     if (!ideia) return res.status(404).json({ erro: 'Ideia não encontrada.' });
 
-    const existingVote = await Vote.findOne({ user: userId, idea: ideaId });
-
-    if (existingVote) {
-      await existingVote.deleteOne();
-      return res.json({ mensagem: 'Voto removido com sucesso.' });
+    const existing = await Vote.findOne({ user: userId, idea: ideaId });
+    if (existing) {
+      return res.status(400).json({ erro: 'Você já votou nesta ideia.' });
     }
 
     const voto = await Vote.create({ user: userId, idea: ideaId });
-    res.status(201).json({ mensagem: 'Voto registrado com sucesso!', voto });
+    res.status(201).json({ mensagem: 'Voto adicionado com sucesso!', voto });
 
   } catch (err) {
-    console.error('Erro ao registrar voto:', err);
-    res.status(500).json({ erro: 'Erro ao registrar voto.' });
+    console.error('Erro ao adicionar voto:', err);
+    res.status(500).json({ erro: 'Erro ao adicionar voto.' });
+  }
+};
+
+exports.removeVote = async (req, res) => {
+  try {
+    const userId = req.session.userId;
+    const { ideaId } = req.body;
+
+    if (!userId) return res.status(401).json({ erro: 'Usuário não autenticado.' });
+    if (!ideaId) return res.status(400).json({ erro: 'Informe o ID da ideia.' });
+
+    const existing = await Vote.findOne({ user: userId, idea: ideaId });
+    if (!existing) {
+      return res.status(404).json({ erro: 'Voto não encontrado.' });
+    }
+
+    await existing.deleteOne();
+    res.json({ mensagem: 'Voto removido com sucesso.' });
+
+  } catch (err) {
+    console.error('Erro ao remover voto:', err);
+    res.status(500).json({ erro: 'Erro ao remover voto.' });
   }
 };
 
