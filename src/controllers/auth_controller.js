@@ -6,12 +6,12 @@ exports.register = async (req, res) => {
     const { nome, email, senha } = req.body;
 
     if (!nome || !email || !senha) {
-      return res.status(400).json({ erro: 'Preencha todos os campos.' });
-    }   
+      return res.status(400).send('Preencha todos os campos.');
+    }
 
     const existing = await User.findOne({ email });
     if (existing) {
-      return res.status(400).json({ erro: 'Email já cadastrado.' });
+      return res.status(400).send('Email já cadastrado.');
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -21,12 +21,14 @@ exports.register = async (req, res) => {
 
     req.session.userId = user._id;
 
-    res.status(201).json({ mensagem: 'Usuário cadastrado com sucesso!', user: { id: user._id, nome: user.nome, email: user.email } });
+    return res.redirect('/login');
+
   } catch (err) {
     console.error('Erro no cadastro:', err);
-    res.status(500).json({ erro: 'Erro ao cadastrar usuário.' });
+    return res.status(500).send('Erro ao cadastrar usuário.');
   }
 };
+
 
 exports.login = async (req, res) => {
   try {

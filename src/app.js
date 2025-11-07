@@ -3,13 +3,18 @@ const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const connectDB = require('./config/db');
-
+const exphbs = require('express-handlebars');
 const authRoutes = require('./routes/login_routes');
+const path = require("path");
 
 const app = express();
 
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.engine('handlebars', exphbs.engine({ defaultLayout: 'main', extname: '.handlebars' }));
+app.set('view engine', 'handlebars');
+app.set("views", path.join(__dirname, "views"));
+app.use(express.static('public'));
 
 app.use(session({
   secret: process.env.SESSION_SECRET || 'nada',
@@ -19,9 +24,8 @@ app.use(session({
   cookie: { maxAge: 1000 * 60 * 60 * 24 }
 }));
 
+app.use('/', authRoutes);
 
-app.get('/', (req, res) => res.json({ ok: true }));
-
-app.use('/login', authRoutes);
+app.get('/', (req, res) => res.redirect('/login'));
 
 module.exports = { app, connectDB };
