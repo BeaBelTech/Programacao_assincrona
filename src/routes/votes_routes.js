@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const voteController = require('../controllers/vote_controller');
 
-router.post('/add', voteController.addVote);
+router.post('/vote', voteController.addVote);
 
 router.delete('/remove', voteController.removeVote);
 

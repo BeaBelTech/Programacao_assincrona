@@ -1,24 +1,88 @@
 <header>
-  <sl-button variant="danger" size="small" href="/logout">
-    Sair
-  </sl-button>
+  <sl-button variant="danger" size="small" href="/logout">Sair</sl-button>
 </header>
+
 <div class="form-container">
   <div class="centro-container">
+    <!-- Mantém apenas a aba de ideias, removida a aba de votação -->
     <sl-tab-group>
       <sl-tab slot="nav" panel="ideias">Gestão de Ideias</sl-tab>
-      <sl-tab slot="nav" panel="votacao">Mecanismo de Votação</sl-tab>
-
+      <!-- Aba de votação removida conforme solicitado -->
       <sl-tab-panel name="ideias">
         <h1>Gestão de Ideias</h1>
-        <p>Conteúdo da aba Gestão de Ideias</p>
-      </sl-tab-panel>
+        <sl-button-group label="Alignment">
+          <sl-button href="/create">Criar ideia</sl-button>
+        </sl-button-group>
+        <h2>Todas as Tarefas:</h2>
+        <div id="listagem-tarefas">
+          {{#each ideias}}
+            <sl-card class="card-overview">
+              <strong>{{this.titulo}}</strong><br />
+              Descrição:
+              {{this.descricao}}<br />
+              Categoria:
+              {{this.categoria}}<br />
+              <small>Autor:
+                {{this.autor.nome}}
+                ({{this.autor.email}})</small><br />
+              <small>Quantidade de votos: {{this.totalVotes}}</small>
+              <div slot="footer">
+                <sl-button-group label="Alignment">
+                  <sl-button
+                    variant="danger"
+                    onclick="(async () => {
+                      const id = '{{this._id}}';
+                      if (!confirm('Tem certeza que deseja excluir esta ideia?')) return;
+                      try {
+                        const response = await fetch(`/delete/${id}`, {
+                          method: 'DELETE',
+                          headers: { 'Content-Type': 'application/json' }
+                        });
+                        if (response.ok) {
+                          alert('Ideia deletada com sucesso!');
+                          location.reload();
+                        } else {
+                          const error = await response.json();
+                          alert(`Erro: ${error.erro}`);
+                        }
+                      } catch (err) {
+                        console.error('Erro na requisição:', err);
+                        alert('Erro ao excluir ideia.');
+                      }
+                    })()"
+                  >
+                    Excluir ideia
+                  </sl-button>
+                  <sl-button href="/get/{{this._id}}">Editar ideia</sl-button>
 
-      <sl-tab-panel name="votacao">
-        <h1>Mecanismo de Votação</h1>
-        <p>Conteúdo da aba de votação</p>
+                 <sl-button
+  variant="{{#if this.userHasVoted}}danger{{else}}primary{{/if}}"
+  onclick="(async () => {
+    const ideaId = '{{this._id}}';
+    try {
+      const response = await fetch('/vote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ideaId })
+      });
+      const result = await response.json();
+      alert(result.mensagem);
+      location.reload();
+    } catch (err) {
+      console.error('Erro na requisição:', err);
+      alert('Erro ao alternar voto.');
+    }
+  })()"
+>
+  {{#if this.userHasVoted}} Remover voto {{else}} Votar {{/if}}
+</sl-button>
+
+                </sl-button-group>
+              </div>
+            </sl-card>
+          {{/each}}
+        </div>
       </sl-tab-panel>
     </sl-tab-group>
   </div>
-
 </div>

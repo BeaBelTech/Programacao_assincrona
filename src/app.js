@@ -20,6 +20,9 @@ app.set('view engine', 'handlebars');
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static('public'));
 
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'nada',
   resave: false,
@@ -30,10 +33,7 @@ app.use(session({
 
 app.use(authMiddleware);
 
-app.use('/', authRoutes);
-app.use('/ideas', ideiaRoutes);
-app.use('/votes', votesRoutes);
-
+app.use('/', authRoutes, ideiaRoutes, votesRoutes);
 app.get('/', (req, res) => res.redirect('/login'));
 
 module.exports = { app, connectDB };

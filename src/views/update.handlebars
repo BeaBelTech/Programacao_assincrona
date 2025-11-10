@@ -1,0 +1,17 @@
+<div class="center-container">
+  <div class="form-card">
+    <h2>Editando ideia</h2>
+    <form action="/update/{{ideia._id}}?_method=PUT" method="POST">
+
+      <input type="text" name="titulo" placeholder="Titulo" required />
+      <input type="text" name="descricao" placeholder="Descrição" required />
+      <input type="text" name="categoria" placeholder="Categoria" required />
+
+      <sl-button-group label="Alignment">
+        <sl-button type="submit" variant="primary">Editar ideia</sl-button>
+        <sl-button href="/centro">Cancelar</sl-button>
+      </sl-button-group>
+    </form>
+
+  </div>
+</div>
