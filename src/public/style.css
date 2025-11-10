@@ -7,11 +7,53 @@
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.06);
 }
 
-#listagem-tarefas {
+#listagem-ideias {
     width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+}
+
+.alerta {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.alerta.sucesso {
+    background-color: #d4ffd4;
+    color: #046e04;
+}
+
+.alerta.erro {
+    background-color: #ffd4d4;
+    color: #8e0000;
+}
+
+#flash-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+/* In your component's or global stylesheet */
+.custom-button::part(base) {
+    /* Set the new background color */
+    background-color: #BF9673;
+    /* Ensure the color is visible on hover/focus if it changes */
+    border-color: #BF9673;
+}
+
+/* You may need to target hover/focus states explicitly for consistency */
+.custom-button::part(base):hover {
+    background-color: #A88667;
+    border-color: #A88667;
+}
+
+.custom-button::part(base):focus {
+    /* Also consider the focus ring */
 }

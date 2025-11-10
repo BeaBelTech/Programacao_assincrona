@@ -1,8 +1,9 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>Lista de Tarefas</title>
+    <title>Lista de ideias</title>
     <link rel="stylesheet" href="/src/public/style.css" />
+    <link rel="stylesheet" href="/style.css" />
     <script
       type="module"
       src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.13.0/cdn/shoelace.js"
@@ -13,16 +14,31 @@
     />
 
   </head>
-  <body>
-    <header>
-      <nav>
-      </nav>
-    </header>
+  <body style="margin: 0;">
     <main>
+      <div
+        id="flash-container"
+        style="position: fixed; z-index: 1; bottom: 1rem; box-shadow: 3px 3px 10px #00000042; "
+      >
+        {{#if success_msg}}
+          {{#each success_msg}}
+            <sl-alert variant="success" closable duration="5000" open>
+              {{this}}
+            </sl-alert>
+          {{/each}}
+        {{/if}}
+
+        {{#if error_msg}}
+          {{#each error_msg}}
+            <sl-alert variant="danger" closable duration="5000" open>
+              {{this}}
+            </sl-alert>
+          {{/each}}
+        {{/if}}
+      </div>
       {{{body}}}
     </main>
-
-    <script src="/src/public/js/idea.js"></script>
+    <script src="/index.js"></script>
   </body>
 
 </html>

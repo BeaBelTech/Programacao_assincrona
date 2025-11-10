@@ -1,15 +1,49 @@
-<div class="center-container">
-  <div class="form-card">
-    <h2>Cadastro</h2>
-    <form action="/register" method="post">
+<div
+  class="center-container"
+  style="display: flex; width: 100%; align-items: center; justify-content: center; height: 100vh; background-color: #BF9673;"
+>
+  <div
+    class="form-card"
+    style="display: flex; flex-direction: column; padding-inline: 1rem; background-color: #D9D0C7; border-radius: 1.2rem;"
+  >
+    <h2 style="color: #59341E;">Cadastro</h2>
+    <form
+      action="/register"
+      method="post"
+      style="display: flex; flex-direction: column; gap: 1.2rem; padding-inline: 2rem;"
+    >
 
-      <input type="text" name="nome" placeholder="Nome" required />
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="senha" placeholder="Senha" required />
+      <sl-input
+        style="width: 50vw;"
+        type="text"
+        name="nome"
+        placeholder="Nome"
+        required
+      ></sl-input>
+      <sl-input
+        style="width: 50vw;"
+        type="email"
+        name="email"
+        placeholder="Email"
+        required
+      ></sl-input>
+      <sl-input
+        style="width: 50vw; background-color: #BF9673 !important;"
+        type="password"
+        name="senha"
+        placeholder="Senha"
+        required
+      ></sl-input>
 
-      <button type="submit">Fazer cadastro</button>
+      <sl-button
+        class="custom-button"
+        variant="primary"
+        style="width: 50vw; background-color: #BF9673 !important;"
+        type="submit"
+      >Fazer cadastro</sl-button>
     </form>
 
-    <p>Já tem conta? <a href="/login">Login</a></p>
+    <p style="color: #59341E;">Já tem conta?
+      <sl-button variant="text" href="/login">Login</sl-button></p>
   </div>
 </div>

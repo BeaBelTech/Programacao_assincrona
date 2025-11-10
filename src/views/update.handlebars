@@ -1,7 +1,11 @@
 <div class="center-container">
   <div class="form-card">
-    <h2>Editando ideia</h2>
-    <form action="/update/{{ideia._id}}?_method=PUT" method="POST">
+    <h2 style="padding-inline: 1rem;">Editando ideia</h2>
+    <form
+      style="display: flex; padding-inline: 1rem; flex-direction: column; gap: 1.2rem;"
+      action="/update/{{ideia._id}}?_method=PUT"
+      method="POST"
+    >
 
       <input type="text" name="titulo" placeholder="Titulo" required />
       <input type="text" name="descricao" placeholder="Descrição" required />

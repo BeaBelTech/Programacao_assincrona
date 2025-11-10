@@ -1,88 +1,58 @@
-<header>
-  <sl-button variant="danger" size="small" href="/logout">Sair</sl-button>
+<header style="display: flex; width: 100%; justify-content: space-between; align-items: center; background-color: #f2f3f4;">
+  <p style="padding-inline: 1rem;">Gestão de ideias</p>
+  <sl-button style="padding-inline: 1rem;" variant="link" size="small" href="/logout">Sair</sl-button>
 </header>
 
-<div class="form-container">
+<div class="form-container" style="padding-inline: 1rem;">
   <div class="centro-container">
-    <!-- Mantém apenas a aba de ideias, removida a aba de votação -->
-    <sl-tab-group>
-      <sl-tab slot="nav" panel="ideias">Gestão de Ideias</sl-tab>
-      <!-- Aba de votação removida conforme solicitado -->
-      <sl-tab-panel name="ideias">
-        <h1>Gestão de Ideias</h1>
-        <sl-button-group label="Alignment">
-          <sl-button href="/create">Criar ideia</sl-button>
-        </sl-button-group>
-        <h2>Todas as Tarefas:</h2>
-        <div id="listagem-tarefas">
+        <div style="display: flex; width: 100%; justify-content: space-between; align-items: center;">
+          <h2>Todas as ideias:</h2>
+           <sl-button href="/create" variant="primary">Criar ideia</sl-button>
+        </div>
+        <div style="display: flex; width: 100%; gap: 2rem; align-items: center; flex-wrap: wrap;">
           {{#each ideias}}
             <sl-card class="card-overview">
               <strong>{{this.titulo}}</strong><br />
-              Descrição:
-              {{this.descricao}}<br />
-              Categoria:
-              {{this.categoria}}<br />
+              <small>
+                Descrição:
+                {{this.descricao}}
+              </small><br />
+              <small>
+                Categoria:
+                {{this.categoria}}
+              </small><br />
               <small>Autor:
                 {{this.autor.nome}}
                 ({{this.autor.email}})</small><br />
               <small>Quantidade de votos: {{this.totalVotes}}</small>
               <div slot="footer">
-                <sl-button-group label="Alignment">
-                  <sl-button
-                    variant="danger"
-                    onclick="(async () => {
-                      const id = '{{this._id}}';
-                      if (!confirm('Tem certeza que deseja excluir esta ideia?')) return;
-                      try {
-                        const response = await fetch(`/delete/${id}`, {
-                          method: 'DELETE',
-                          headers: { 'Content-Type': 'application/json' }
-                        });
-                        if (response.ok) {
-                          alert('Ideia deletada com sucesso!');
-                          location.reload();
-                        } else {
-                          const error = await response.json();
-                          alert(`Erro: ${error.erro}`);
-                        }
-                      } catch (err) {
-                        console.error('Erro na requisição:', err);
-                        alert('Erro ao excluir ideia.');
-                      }
-                    })()"
-                  >
-                    Excluir ideia
-                  </sl-button>
-                  <sl-button href="/get/{{this._id}}">Editar ideia</sl-button>
+               {{#if this.isOwner}}
+  <sl-button
+    variant="link"
+    onclick="deleteIdea('{{this._id}}')"
+  >
+    🗑️
+  </sl-button>
 
-                 <sl-button
-  variant="{{#if this.userHasVoted}}danger{{else}}primary{{/if}}"
-  onclick="(async () => {
-    const ideaId = '{{this._id}}';
-    try {
-      const response = await fetch('/vote', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ideaId })
-      });
-      const result = await response.json();
-      alert(result.mensagem);
-      location.reload();
-    } catch (err) {
-      console.error('Erro na requisição:', err);
-      alert('Erro ao alternar voto.');
-    }
-  })()"
->
-  {{#if this.userHasVoted}} Remover voto {{else}} Votar {{/if}}
-</sl-button>
+  <sl-button href="/get/{{this._id}}">✏️</sl-button>
+{{/if}}
+
+
+
+<form action="/vote" method="POST" style="display:inline;">
+  <input type="hidden" name="ideaId" value="{{this._id}}" />
+
+  <sl-button type="submit" variant="{{#if this.userHasVoted}}danger{{else}}primary{{/if}}">
+    🗳️{{#if this.userHasVoted}} Remover voto {{else}} Votar {{/if}}
+  </sl-button>
+</form>
+
 
                 </sl-button-group>
               </div>
             </sl-card>
           {{/each}}
         </div>
-      </sl-tab-panel>
     </sl-tab-group>
   </div>
 </div>

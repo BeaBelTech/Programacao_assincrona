@@ -6,12 +6,12 @@ exports.register = async (req, res) => {
     const { nome, email, senha } = req.body;
 
     if (!nome || !email || !senha) {
-      return res.status(400).send('Preencha todos os campos.');
+      return req.flash('error_msg', 'Preencha todos os campos');
     }
 
     const existing = await User.findOne({ email });
     if (existing) {
-      return res.status(400).send('Email já cadastrado.');
+      return req.flash('error_msg', 'Usuário já cadastrado');
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -21,11 +21,12 @@ exports.register = async (req, res) => {
 
     req.session.userId = user._id;
 
+    req.flash('success_msg', 'Cadastrado com sucesso!');
     return res.redirect('/login');
 
   } catch (err) {
-    console.error('Erro no cadastro:', err);
-    return res.status(500).send('Erro ao cadastrar usuário.');
+
+    return req.flash('error_msg', 'Erro ao cadastrar');
   }
 };
 
@@ -35,33 +36,32 @@ exports.login = async (req, res) => {
     const { email, senha } = req.body;
 
     if (!email || !senha) {
-      return res.status(400).json({ erro: 'Informe email e senha.' });
+      return req.flash('error_msg', 'Informe email e senha');
     }
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ erro: 'Usuário não encontrado.' });
+      return req.flash('error_msg', 'Usuário não encontrado');
     }
 
     const match = await bcrypt.compare(senha, user.passwordHash);
     if (!match) {
-      return res.status(401).json({ erro: 'Senha incorreta.' });
+      return req.flash('error_msg', 'Senha incorreta');
     }
 
 
     req.session.userId = user._id;
 
-    res.json({ mensagem: 'Login realizado com sucesso!', user: { id: user._id, nome: user.nome, email: user.email } });
+    res.redirect('/centro');
   } catch (err) {
-    console.error('Erro no login:', err);
-    res.status(500).json({ erro: 'Erro ao fazer login.' });
+    req.flash('error_msg', 'Erro ao fazer login');
   }
 };
 
 exports.logout = (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      return res.status(500).json({ erro: 'Erro ao encerrar sessão.' });
+      return req.flash('error_msg', 'Erro ao encontrar sessão.');
     }
     res.clearCookie('connect.sid');
   });

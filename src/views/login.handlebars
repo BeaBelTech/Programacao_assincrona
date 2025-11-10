@@ -1,14 +1,42 @@
-<div class="center-container">
-  <div class="form-card">
-    <h2>Login</h2>
-    <form action="/login" method="post">
+<div
+  class="center-container"
+  style="display: flex; width: 100%; align-items: center; justify-content: center; height: 100vh; background-color: #BF9673;"
+>
+  <div
+    class="form-card"
+    style="display: flex; flex-direction: column; padding-inline: 1rem; background-color: #D9D0C7; border-radius: 1.2rem;"
+  >
+    <h2 style="color: #59341E;">Login</h2>
+    <form
+      action="/login"
+      method="post"
+      style="display: flex; flex-direction: column; gap: 1.2rem; padding-inline: 2rem;"
+    >
 
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="senha" placeholder="Senha" required />
+      <sl-input
+        type="email"
+        name="email"
+        placeholder="Email"
+        required
+        style="width: 50vw;"
+      ></sl-input>
+      <sl-input
+        style="width: 50vw;"
+        type="password"
+        name="senha"
+        placeholder="Senha"
+        required
+      ></sl-input>
 
-      <button type="submit">Entrar</button>
+      <sl-button
+        class="custom-button"
+        style="width: 50vw; background-color: #BF9673 !important;"
+        type="submit"
+        variant="primary"
+      >Entrar</sl-button>
     </form>
 
-    <p>Ainda não tem conta? <a href="/register">Cadastre-se</a></p>
+    <p style="color: #59341E;">Ainda não tem conta?
+      <sl-button variant="text" href="/register">Cadastre-se</sl-button></p>
   </div>
 </div>
