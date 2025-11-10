@@ -54,6 +54,14 @@
     border-color: #A88667;
 }
 
-.custom-button::part(base):focus {
-    /* Also consider the focus ring */
+.custom-link-button::part(base) {
+    /* Ensure the color is visible on hover/focus if it changes */
+    border-color: #BF9673;
+    color: #BF9673;
+}
+
+.custom-link-button::part(base):hover {
+    background-color: #A88667;
+    border-color: #A88667;
+    color: white;
 }

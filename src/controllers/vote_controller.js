@@ -32,7 +32,7 @@ exports.toggleVote = async (req, res) => {
       return setTimeout(() => res.redirect('/centro'), 2000);
     }
 
-    // Nunca votou → cria
+    // Nunca votou 
     await Vote.create({ user: userId, idea: ideaId });
     req.flash('success_msg', 'Voto registrado com sucesso!');
     return setTimeout(() => res.redirect('/centro'), 2000);
@@ -50,7 +50,6 @@ exports.getVotesByIdea = async (req, res) => {
     const votos = await Vote.find({ idea: ideaId }).populate('user', 'nome email');
     res.render('centro', { votos });
   } catch (err) {
-    console.error('Erro ao buscar votos:', err);
     req.flash('error_msg', 'Erro ao buscar votos da ideia.');
     res.redirect('/centro');
   }

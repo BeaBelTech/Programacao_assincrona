@@ -1,20 +1,47 @@
-<div class="center-container">
-  <div class="form-card">
-    <h2 style="padding-inline: 1rem;">Criando ideia</h2>
+<div
+  class="center-container"
+  style="display: flex; width: 100%; align-items: center; justify-content: center; height: 100vh; background-color: #D9D0C7;"
+>
+  <div
+    class="form-card"
+    style="display: flex; flex-direction: column; padding-inline: 1rem; background-color: #F2F2F2; border-radius: 1.2rem;"
+  >
+    <h2 style="padding-inline: 1rem; color: #59341E;">Criando ideia</h2>
     <form
       action="/create"
       method="post"
-      style="display: flex; padding-inline: 1rem; flex-direction: column; gap: 1.2rem;"
+      style="display: flex; flex-direction: column; gap: 1.2rem; padding-inline: 2rem;"
     >
 
-      <input type="text" name="titulo" placeholder="Titulo" required />
-      <input type="text" name="descricao" placeholder="Descrição" required />
-      <input type="text" name="categoria" placeholder="Categoria" required />
+      <sl-input
+        style="width: 50vw;"
+        type="text"
+        name="titulo"
+        placeholder="Titulo"
+        required
+      ></sl-input>
+      <sl-input
+        style="width: 50vw;"
+        type="text"
+        name="descricao"
+        placeholder="Descrição"
+        required
+      ></sl-input>
+      <sl-input
+        style="width: 50vw;"
+        type="text"
+        name="categoria"
+        placeholder="Categoria"
+        required
+      ></sl-input>
 
-      <sl-button-group label="Alignment">
-        <sl-button type="submit" variant="primary">Criar ideia</sl-button>
-        <sl-button href="/centro">Cancelar</sl-button>
-      </sl-button-group>
+      <sl-button
+        type="submit"
+        variant="primary"
+        class="custom-button"
+        style="width: 50vw; background-color: #BF9673 !important;"
+      >Criar ideia</sl-button>
+      <sl-button href="/centro" class="custom-link-button">Cancelar</sl-button>
     </form>
 
   </div>

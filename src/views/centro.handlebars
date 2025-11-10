@@ -1,40 +1,40 @@
-<header style="display: flex; width: 100%; justify-content: space-between; align-items: center; background-color: #f2f3f4;">
-  <p style="padding-inline: 1rem;">Gestão de ideias</p>
-  <sl-button style="padding-inline: 1rem;" variant="link" size="small" href="/logout">Sair</sl-button>
+<header style="display: flex; width: 100%; justify-content: space-between; align-items: center; background-color: #F2F2F2;">
+  <p style="padding-inline: 1rem; color: #59341E;">Gestão de ideias</p>
+  <sl-button style="padding-inline: 1rem;" size="small" href="/logout"  class="custom-link-button">Sair</sl-button>
 </header>
 
 <div class="form-container" style="padding-inline: 1rem;">
   <div class="centro-container">
         <div style="display: flex; width: 100%; justify-content: space-between; align-items: center;">
-          <h2>Todas as ideias:</h2>
-           <sl-button href="/create" variant="primary">Criar ideia</sl-button>
+          <h2 style="color: #59341E;">Todas as ideias:</h2>
+           <sl-button href="/create" variant="primary"  class="custom-button">Criar ideia</sl-button>
         </div>
         <div style="display: flex; width: 100%; gap: 2rem; align-items: center; flex-wrap: wrap;">
           {{#each ideias}}
             <sl-card class="card-overview">
-              <strong>{{this.titulo}}</strong><br />
-              <small>
+              <strong style="color: #59341E;">{{this.titulo}}</strong><br />
+              <small style="color: #59341E;">
                 Descrição:
                 {{this.descricao}}
               </small><br />
-              <small>
+              <small style="color: #59341E;">
                 Categoria:
                 {{this.categoria}}
               </small><br />
-              <small>Autor:
+              <small style="color: #59341E;">Autor:
                 {{this.autor.nome}}
                 ({{this.autor.email}})</small><br />
-              <small>Quantidade de votos: {{this.totalVotes}}</small>
+              <small style="color: #59341E;">Quantidade de votos: {{this.totalVotes}}</small>
               <div slot="footer">
                {{#if this.isOwner}}
   <sl-button
-    variant="link"
     onclick="deleteIdea('{{this._id}}')"
+    class="custom-link-button"
   >
     🗑️
   </sl-button>
 
-  <sl-button href="/get/{{this._id}}">✏️</sl-button>
+  <sl-button href="/get/{{this._id}}" class="custom-link-button">✏️</sl-button>
 {{/if}}
 
 
@@ -42,7 +42,7 @@
 <form action="/vote" method="POST" style="display:inline;">
   <input type="hidden" name="ideaId" value="{{this._id}}" />
 
-  <sl-button type="submit" variant="{{#if this.userHasVoted}}danger{{else}}primary{{/if}}">
+  <sl-button type="submit" class="custom-link-button">
     🗳️{{#if this.userHasVoted}} Remover voto {{else}} Votar {{/if}}
   </sl-button>
 </form>
